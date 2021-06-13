@@ -1,22 +1,25 @@
 {
-	"name": "base-package",
-	"version": "0.1.0",
-	"description": "This is my base project to use when creating new packages.",
+	"name": "pubsub",
+	"version": "1.0.0",
+	"description": "An implementation of the publish-subscribe pattern.",
 	"private": true,
-	"browser": "./main.js",
+	"main": "./pubsub.js",
 	"type": "module",
 	"files": [
-		"main.js"
+		"pubsub.js"
 	],
 	"scripts": {
 		"server": "node server/server.js",
 		"build": "gulp build",
 		"watch": "gulp",
-		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\""
+		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",
+		"test": "node test/test.js"
 	},
 	"author": "Mark Hanna",
 	"license": "Hippocratic-2.1",
 	"devDependencies": {
+		"activate": "github:cipscis/activate#semver:1.x",
+		"chalk": "^4.1.1",
 		"concurrently": "^6.1.0",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
