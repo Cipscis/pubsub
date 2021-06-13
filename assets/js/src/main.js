@@ -1,8 +1,14 @@
-// Using import from '/filename', Webpack will
-// bundle files from outside the docs directory
-// even though it is the root for the server
-// both locally and on GitHub Pages
+import { activate } from 'activate';
 
-import foo from '/main.js';
+import { publish, subscribe, unsubscribe } from '/pubsub.js';
 
-foo('example code goes here');
+let timesPublished = 0;
+const output = document.getElementById('example-output');
+
+const event = 'example-event';
+const callback = (incr) => output.innerHTML = timesPublished += incr;
+const args = [1, 2, 3];
+
+activate('.js-example-subscribe', () => subscribe(event, callback));
+activate('.js-example-publish', () => publish(event, 1));
+activate('.js-example-unsubscribe', () => unsubscribe(event, callback));
