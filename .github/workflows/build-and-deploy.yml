@@ -12,7 +12,7 @@ jobs:
 
       - name: Set up Nodee
         uses: actions/setup-node@v2
-        width:
+        with:
           node-version: '14'
 
       - name: Install and Build
