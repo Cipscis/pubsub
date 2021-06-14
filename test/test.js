@@ -13,6 +13,8 @@ const test = (message, testFn) => {
 	} catch (e) {
 		fail(message);
 		console.error(e);
+
+		process.exitCode = 1;
 	}
 };
 
