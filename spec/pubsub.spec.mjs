@@ -1,0 +1,95 @@
+import { publish, subscribe, unsubscribe } from '../pubsub.js';
+
+describe('pubsub', () => {
+	let fn;
+
+	beforeEach(() => {
+		fn = jasmine.createSpy('fn');
+	});
+
+	it(`calls subscribed functions when publishing an event`, () => {
+		const event = 'test/basic-subscribe';
+
+		subscribe(event, fn);
+		publish(event);
+
+		expect(fn).toHaveBeenCalled();
+	});
+
+	it(`doesn't call unsubscribed functions when publishing an event`, () => {
+		const event = 'test/basic-unsubscribe';
+
+		subscribe(event, fn);
+		publish(event);
+
+		expect(fn.calls.count()).toBe(1);
+
+		unsubscribe(event, fn);
+		publish(event);
+
+		expect(fn.calls.count()).toBe(1);
+	});
+
+	it(`calls subscribed functions in the order in which they were subscribed`, () => {
+		const event = 'test/subscribe-order';
+
+		const watcher = jasmine.createSpy('watcher');
+
+		// Track which event was called as an argument of watcher
+		fn.and.callFake(() => watcher('A'));
+		let fnB = jasmine.createSpy('fnB').and.callFake(() => watcher('B'));
+
+		// Test first order
+		subscribe(event, fn);
+		subscribe(event, fnB);
+
+		publish(event);
+
+		expect(watcher.calls.count()).toBe(2);
+		expect(watcher.calls.allArgs()).toEqual([['A'], ['B']]);
+
+		// Reset
+		unsubscribe(event, fn);
+		unsubscribe(event, fnB);
+		watcher.calls.reset();
+
+		// Test reverse order
+		subscribe(event, fnB);
+		subscribe(event, fn);
+
+		publish(event);
+
+		expect(watcher.calls.count()).toBe(2);
+		expect(watcher.calls.allArgs()).toEqual([['B'], ['A']]);
+	});
+
+	it(`ignores requests to subscribe an already subscribed function`, () => {
+		const event = 'test/subscribe-mutliple';
+
+		const watcher = jasmine.createSpy('watcher');
+
+		// Track which event was called as an argument of watcher
+		fn.and.callFake(() => watcher('A'));
+		let fnB = jasmine.createSpy('fnB').and.callFake(() => watcher('B'));
+
+		// Subscribe and ensure it worked normally
+		subscribe(event, fn);
+		subscribe(event, fnB);
+
+		publish(event);
+
+		expect(watcher.calls.count()).toBe(2);
+		expect(watcher.calls.allArgs()).toEqual([['A'], ['B']]);
+
+		// Reset
+		watcher.calls.reset();
+
+		// This subscribe should be ignored
+		subscribe(event, fn);
+
+		publish(event);
+
+		expect(watcher.calls.count()).toBe(2);
+		expect(watcher.calls.allArgs()).toEqual([['A'], ['B']]);
+	})
+});
