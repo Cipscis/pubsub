@@ -1,6 +1,6 @@
 {
 	"name": "pubsub",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"description": "An implementation of the publish-subscribe pattern.",
 	"private": true,
 	"main": "./pubsub.js",
@@ -16,9 +16,12 @@
 		"test": "jasmine"
 	},
 	"author": "Mark Hanna",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cipscis/pubsub.git"
+	},
 	"license": "Hippocratic-2.1",
 	"devDependencies": {
-		"activate": "github:cipscis/activate#semver:1.x",
 		"concurrently": "^6.1.0",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
