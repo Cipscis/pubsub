@@ -92,4 +92,14 @@ describe('pubsub', () => {
 		expect(watcher.calls.count()).toBe(2);
 		expect(watcher.calls.allArgs()).toEqual([['A'], ['B']]);
 	})
+
+	it(`passes arguments to subscribed functions`, () => {
+		const event = 'test/publish-arguments';
+
+		subscribe(event, fn);
+
+		publish(event, 1, 2, 3);
+
+		expect(fn.calls.argsFor(0)).toEqual([1, 2, 3]);
+	});
 });
