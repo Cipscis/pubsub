@@ -4,7 +4,7 @@
 
 ## Install
 
-Run `npm install github:cipscis/pubsub#semver:1.x`
+Run `npm install github:cipscis/pubsub#semver:2.x`
 
 ## Usage
 
