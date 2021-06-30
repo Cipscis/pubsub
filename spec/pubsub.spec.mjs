@@ -4,7 +4,7 @@ describe('pubsub', () => {
 	let fn;
 
 	beforeEach(() => {
-		fn = jasmine.createSpy('fn');
+		fn = jasmine.createSpy();
 	});
 
 	it(`calls subscribed functions when publishing an event`, () => {
@@ -13,7 +13,49 @@ describe('pubsub', () => {
 		subscribe(event, fn);
 		publish(event);
 
-		expect(fn).toHaveBeenCalled();
+		expect(fn.calls.count()).toBe(1);
+	});
+
+	it(`can publish multiple events using a whitespace-separated list`, () => {
+		const fnB = jasmine.createSpy();
+
+		const eventA = 'test/multiple-publish/a';
+		const eventB = 'test/multiple-publish/b';
+		const eventC = 'test/multiple-publish/c';
+
+		subscribe(eventA, fn);
+		subscribe(eventB, fnB);
+		subscribe(eventC, fnB);
+
+		publish(`${eventA} ${eventB}  	${eventC} `);
+
+		expect(fn.calls.count()).toBe(1);
+		expect(fnB.calls.count()).toBe(2);
+	});
+
+	it(`can subscribe a function to multiple events using a whitespace-separated list`, () => {
+		const eventA = 'test/multiple-subscribe/a';
+		const eventB = 'test/multiple-subscribe/b';
+		const eventC = 'test/multiple-subscribe/c';
+
+		subscribe(`${eventA} ${eventB} 	${eventC} `, fn);
+
+		publish(eventA);
+
+		expect(fn.calls.count()).toBe(1);
+
+		publish(eventB);
+
+		expect(fn.calls.count()).toBe(2);
+
+		publish(eventC);
+
+		expect(fn.calls.count()).toBe(3);
+
+		// Ensure the ending whitespace didn't create an event called ''
+		publish('');
+
+		expect(fn.calls.count()).toBe(3);
 	});
 
 	it(`doesn't call unsubscribed functions when publishing an event`, () => {

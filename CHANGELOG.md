@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2021-06-30
+
+### Added
+
+* Both `publish` and `subscribe` can now take multiple events using single string with each event name separated by whitespace. This is a breaking change because event names can no longer contain whitespace.
+
 ## [1.0.3] - 2021-06-17
 
 ### Changed
