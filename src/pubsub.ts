@@ -1,14 +1,14 @@
-const subscriptions = {};
+const subscriptions: Record<string, Function[]> = {};
 
 // Split by whitespace, then remove any empty strings
-const split = (eventString) => eventString.split(/\s+/).filter(str => !!str);
+const split = (eventString: string) => eventString.split(/\s+/).filter(str => !!str);
 
-const publish = function (event, ...args) {
+const publish = function (this: any, event: string, ...args: any[]) {
 	const events = split(event);
 
 	if (events.length > 1) {
 		for (const event of events) {
-			publish.apply(this, [event].concat(args));
+			publish.call(this, event, ...args);
 		}
 	} else if (event in subscriptions) {
 		const callbacks = subscriptions[event];
@@ -19,7 +19,7 @@ const publish = function (event, ...args) {
 	}
 };
 
-const subscribe = function (event, callback) {
+const subscribe = function (event: string, callback: Function) {
 	const events = split(event);
 
 	if (events.length > 1) {
@@ -40,7 +40,7 @@ const subscribe = function (event, callback) {
 	}
 };
 
-const unsubscribe = function (event, callback) {
+const unsubscribe = function (event: string, callback: Function) {
 	if (event in subscriptions) {
 		const callbacks = subscriptions[event];
 		const index = callbacks.indexOf(callback);

@@ -1,19 +1,21 @@
 {
-	"name": "pubsub",
-	"version": "1.0.3",
+	"name": "@cipscis/pubsub",
+	"version": "2.0.1",
 	"description": "An implementation of the publish-subscribe pattern.",
 	"private": true,
-	"main": "./pubsub.js",
+	"main": "./dist/pubsub.js",
 	"type": "module",
 	"files": [
-		"pubsub.js"
+		"dist/**/*"
 	],
+	"types": "dist/pubsub.d.ts",
 	"scripts": {
 		"server": "node server/server.js",
 		"build": "gulp build",
 		"watch": "gulp",
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",
-		"test": "jasmine"
+		"test": "tsc && jasmine",
+		"prepare": "gulp clean && tsc && jasmine"
 	},
 	"author": "Mark Hanna",
 	"repository": {
@@ -22,13 +24,20 @@
 	},
 	"license": "Hippocratic-2.1",
 	"devDependencies": {
+		"@types/jasmine": "^3.8.2",
 		"concurrently": "^6.1.0",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
 		"gulp": "^4.0.2",
-		"gulp-sass": "^4.1.0",
+		"gulp-sass": "^5.0.0",
 		"jasmine": "^3.7.0",
+		"resolve-typescript-plugin": "^1.1.0",
 		"sass": "^1.34.1",
-		"webpack-stream": "^6.1.2"
+		"ts-loader": "^9.2.5",
+		"typescript": "^4.3.5",
+		"webpack": "^5.40.0"
+	},
+	"engines": {
+		"node": ">=14"
 	}
 }

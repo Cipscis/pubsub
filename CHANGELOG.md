@@ -1,6 +1,13 @@
-# Base Package Changelog
+# Pubsub Changelog
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.1] - 2022-04-02
+
+### Changed
+
+* Converted to TypeScript
+* Updated build system
 
 ## [2.0.0] - 2021-06-30
 

@@ -1,4 +1,4 @@
-import { publish, subscribe, unsubscribe } from '../pubsub.js';
+import { publish, subscribe, unsubscribe } from '../dist/pubsub.js';
 
 describe('pubsub', () => {
 	let fn;

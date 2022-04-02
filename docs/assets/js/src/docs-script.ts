@@ -1,10 +1,10 @@
-import { publish, subscribe, unsubscribe } from '/pubsub.js';
+import { publish, subscribe, unsubscribe } from '@cipscis/pubsub';
 
 let timesPublished = 0;
-const output = document.getElementById('example-output');
+const $output = document.getElementById('example-output');
 
 const event = 'example-event';
-const callback = (incr) => output.innerHTML = timesPublished += incr;
+const callback = (incr: number) => $output!.innerHTML = (timesPublished += incr) + '';
 const args = [1, 2, 3];
 
 document.querySelectorAll('.js-example-subscribe').forEach(($el) => $el.addEventListener('click', () => subscribe(event, callback)));
