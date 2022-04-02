@@ -2,7 +2,6 @@
 	"name": "@cipscis/pubsub",
 	"version": "2.0.1",
 	"description": "An implementation of the publish-subscribe pattern.",
-	"private": true,
 	"main": "./dist/pubsub.js",
 	"type": "module",
 	"files": [
